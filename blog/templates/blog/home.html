@@ -4,7 +4,47 @@
     <meta charset="UTF-8">
     <title>blog</title>
 </head>
-<body>
+<body style="background: antiquewhite ">
 <h1>hii this is Blog home</h1>
+{#filter Auther#}
+<p><b>Auther :</b>{{ contex.auther|yesno:"yes,no,not found" }}</p>
+<hr color="red">
+<p><b>Name (upper case) </b>: {{ contex.name | upper }}</p>
+<p><b>Name (lower case)</b>: {{ contex.name | lower }}</p>
+<p><b>Age</b>: {{ contex.age }}</p>
+<p><b>Age (+50)</b>: {{ contex.age | add:50 }}</p>
+<p><b>Skills</b>: {{ contex.skill }}</p>
+<p><b>Skills - join</b>: {{ contex.skill | join:"  " }}</p>
+<p><b>Skills - length</b>: {{ contex.skill | length }}</p>
+<p><b>Skills - slice</b>: {{ contex.skill | slice:"::2" }}</p>
+
+<p><b>Time</b>: {{ contex.blog.create_at }}</p>
+<p><b>Time</b>: {{ contex.blog.content }}</p>
+{% if blog.1.auther %}
+    <h2>the auther have One {{ blog.1.auther }}</h2>
+{% else %}
+    <h2>Auther no longer alive {{ blog.1.auther }}</h2>
+
+{% endif %}
+<ul>
+    {% for blogs in blog %}
+        <li>   {{ forloop.counter }} . {{ blogs.title }} , {{ blogs.content }} , {{ blogs.auther }}</li>
+    {% empty %}
+        <li>no blogs found</li>
+    {% endfor %}
+</ul>
+{#cycle#}
+<hr>
+<h2>Blogs In table</h2>
+<table border="2" cellpadding="6" cellspacing="0">
+    {% for blogs in blog %}
+      <tr style="background: {% cycle 'green' 'yellow' %}">
+      <td>{{ blogs.title }}</td>
+      <td>{{ blogs.content }}</td>
+      <td>{{ blogs.auther | yesno:"yes , no "}}</td>
+      <td>{{ blogs.auther_name }}</td>
+      </tr>
+    {% endfor %}
+</table>
 </body>
 </html>
